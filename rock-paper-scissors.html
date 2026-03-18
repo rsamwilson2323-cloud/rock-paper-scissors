@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rock Paper Scissors</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#1f4037,#99f2c8);
+}
+
+.game-box{
+  background:#ffffff;
+  width:350px;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,0.3);
+}
+
+h1{
+  margin-bottom:10px;
+  color:#333;
+}
+
+.score{
+  display:flex;
+  justify-content:space-around;
+  margin:15px 0;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.choices{
+  display:flex;
+  justify-content:space-around;
+  margin:20px 0;
+}
+
+.choice{
+  font-size:40px;
+  padding:15px;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.choice:hover{
+  transform:scale(1.15);
+  background:#f1f1f1;
+}
+
+.result{
+  margin-top:20px;
+  font-size:18px;
+  min-height:50px;
+  color:#444;
+}
+
+.reset{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:#1f4037;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.reset:hover{
+  background:#145a4f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-box">
+  <h1>✊ ✋ ✌️</h1>
+  <p>Rock • Paper • Scissors</p>
+
+  <div class="score">
+    <div>You: <span id="playerScore">0</span></div>
+    <div>CPU: <span id="computerScore">0</span></div>
+  </div>
+
+  <div class="choices">
+    <button class="choice" onclick="play('Rock')">✊</button>
+    <button class="choice" onclick="play('Paper')">✋</button>
+    <button class="choice" onclick="play('Scissors')">✌️</button>
+  </div>
+
+  <div class="result" id="resultText"></div>
+
+  <button class="reset" onclick="resetGame()">Reset</button>
+</div>
+
+<script>
+let playerScore = 0;
+let computerScore = 0;
+
+function play(playerChoice){
+  const choices = ["Rock","Paper","Scissors"];
+  const computerChoice = choices[Math.floor(Math.random()*3)];
+
+  let result = "";
+
+  if(playerChoice === computerChoice){
+    result = "🤝 It's a Draw!";
+  }
+  else if(
+    (playerChoice === "Rock" && computerChoice === "Scissors") ||
+    (playerChoice === "Paper" && computerChoice === "Rock") ||
+    (playerChoice === "Scissors" && computerChoice === "Paper")
+  ){
+    result = "🎉 You Win!";
+    playerScore++;
+  }
+  else{
+    result = "💻 Computer Wins!";
+    computerScore++;
+  }
+
+  document.getElementById("playerScore").innerText = playerScore;
+  document.getElementById("computerScore").innerText = computerScore;
+
+  document.getElementById("resultText").innerHTML =
+    `You chose <b>${playerChoice}</b><br>
+     Computer chose <b>${computerChoice}</b><br><br>
+     <strong>${result}</strong>`;
+}
+
+function resetGame(){
+  playerScore = 0;
+  computerScore = 0;
+  document.getElementById("playerScore").innerText = 0;
+  document.getElementById("computerScore").innerText = 0;
+  document.getElementById("resultText").innerText = "";
+}
+</script>
+
+</body>
+</html>
